@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: #6366f1;
+  --accent-glow: rgba(99, 102, 241, 0.5);
+}
+
+@theme {
+  --color-space-black: #020205;
+  --color-violet-glow: #8b5cf6;
+  --color-cyan-glow: #06b6d4;
+  --color-mercury: #e5e7eb;
+
+  --font-inter: "Inter", sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #000;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-black text-white font-inter overflow-x-hidden;
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+
+  /* High-Performance Card with GPU Acceleration */
+  .performance-card {
+    @apply relative rounded-2xl overflow-hidden;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    /* GPU Promotion & Isolation */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    isolation: isolate;
+  }
+
+  /* Instant Blur Layer - No Delay */
+  .performance-blur-layer {
+    @apply absolute inset-0 pointer-events-none;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    opacity: 1;
+    z-index: -1;
+  }
+
+  .border-glow {
+    @apply absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    background-size: 200% 100%;
+    animation: flow 4s ease-in-out infinite;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: destination-out;
+    padding: 1px;
+  }
+
+  .scanline {
+    @apply absolute inset-0 pointer-events-none z-10 opacity-[0.1];
+    background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(6, 182, 212, 0.5) 50%,
+        transparent 100%);
+    background-size: 100% 4px;
+    animation: scanline 10s linear infinite;
+  }
+
+  .neural-text-glow {
+    text-shadow: 0 0 10px var(--accent-glow);
+  }
+
+  @keyframes flow {
+    from {
+      background-position: 200% 0;
+    }
+
+    to {
+      background-position: -200% 0;
+    }
+  }
+
+  @keyframes scanline {
+    from {
+      transform: translateY(-100%);
+    }
+
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  .glass-dark {
+    @apply bg-black/20 backdrop-blur-2xl border border-white/5;
+  }
+
+  .text-glow-violet {
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+  }
+
+  .text-glow-cyan {
+    text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+  }
+
+  .nebula-violet {
+    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+  }
+
+  .nebula-cyan {
+    background: radial-gradient(circle at center, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+  }
+
+  .ar-grid {
+    background-image:
+      linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
+
+/* Chromatic Aberration Simulation */
+.chromatic-aberration {
+  position: relative;
+}
+
+.chromatic-aberration::before,
+.chromatic-aberration::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: inherit;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.chromatic-aberration::before {
+  border-color: rgba(255, 0, 0, 0.2);
+  transform: translate(-1px, 0);
+}
+
+.chromatic-aberration::after {
+  border-color: rgba(0, 255, 255, 0.2);
+  transform: translate(1px, 0);
+}
+
+/* Floating Animation */
+@keyframes bob {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bob {
+  animation: bob 4s ease-in-out infinite;
+}
