@@ -5,8 +5,19 @@ const VideoCarousel = ({ videos, interval = 20000, className }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [nextIndex, setNextIndex] = useState(1);
     const [isTransitioning, setIsTransitioning] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const videoRefs = useRef([]);
     const { setCurrentTheme } = useTheme();
+
+    // Check for mobile device
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        handleResize(); // Initial check
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Initialize video refs
     useEffect(() => {
@@ -54,13 +65,14 @@ const VideoCarousel = ({ videos, interval = 20000, className }) => {
     }, []);
 
     return (
-        <div className={className || "fixed inset-0 w-full h-full z-0 bg-black"}>
+        <div className={className || "fixed inset-0 w-full h-full z-0 bg-[#020205]"}>
             {videos.map((video, index) => {
-                // Only render current and next video to save mobile resources
-                const isActive = index === currentIndex;
-                const isNext = isTransitioning && index === nextIndex;
+                // LOGIC:
+                // Desktop: Render ALL videos to ensure instant, smooth cross-fades.
+                // Mobile: Only render current & next videos to prevent crashing/lag.
+                const shouldRender = !isMobile || (index === currentIndex || (isTransitioning && index === nextIndex));
 
-                if (!isActive && !isNext) return null;
+                if (!shouldRender) return null;
 
                 return (
                     <video
@@ -80,7 +92,8 @@ const VideoCarousel = ({ videos, interval = 20000, className }) => {
                             transform: 'translateZ(0)',
                             backfaceVisibility: 'hidden'
                         }}
-                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${isActive ? 'opacity-100' : 'opacity-0'
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${index === currentIndex || (isTransitioning && index === nextIndex)
+                                ? 'opacity-100' : 'opacity-0'
                             }`}
                     />
                 );
