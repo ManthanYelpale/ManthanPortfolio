@@ -54,30 +54,37 @@ const VideoCarousel = ({ videos, interval = 20000, className }) => {
     }, []);
 
     return (
-        <div className={className || "fixed inset-0 w-full h-full z-0"}>
-            {videos.map((video, index) => (
-                <video
-                    key={index}
-                    ref={el => videoRefs.current[index] = el}
-                    src={video.src}
-                    autoPlay={index === 0}
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    disablePictureInPicture
-                    style={{
-                        imageRendering: 'high-quality',
-                        filter: 'contrast(1.05) saturate(1.1)',
-                        transform: 'translateZ(0)',
-                        backfaceVisibility: 'hidden'
-                    }}
-                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${index === currentIndex || (isTransitioning && index === nextIndex)
-                            ? 'opacity-100'
-                            : 'opacity-0'
-                        }`}
-                />
-            ))}
+        <div className={className || "fixed inset-0 w-full h-full z-0 bg-black"}>
+            {videos.map((video, index) => {
+                // Only render current and next video to save mobile resources
+                const isActive = index === currentIndex;
+                const isNext = isTransitioning && index === nextIndex;
+
+                if (!isActive && !isNext) return null;
+
+                return (
+                    <video
+                        key={index}
+                        ref={el => videoRefs.current[index] = el}
+                        src={video.src}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        webkit-playsinline="true"
+                        preload="auto"
+                        disablePictureInPicture
+                        style={{
+                            imageRendering: 'high-quality',
+                            filter: 'contrast(1.05) saturate(1.1)',
+                            transform: 'translateZ(0)',
+                            backfaceVisibility: 'hidden'
+                        }}
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${isActive ? 'opacity-100' : 'opacity-0'
+                            }`}
+                    />
+                );
+            })}
         </div>
     );
 };

@@ -24,7 +24,7 @@ function Navbar() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-fit"
         >
-            <div className="relative bg-white/10 backdrop-blur-xl px-8 py-4 rounded-full flex items-center gap-8 shadow-2xl border-2 border-white/40">
+            <div className="relative bg-white/10 backdrop-blur-xl px-4 md:px-8 py-3 md:py-4 rounded-full flex items-center gap-4 md:gap-8 shadow-2xl border-2 border-white/40 max-w-[95vw]">
                 {navLinks.map((link) => (
                     <button
                         key={link.id}

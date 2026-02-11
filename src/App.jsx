@@ -119,7 +119,7 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div ref={containerRef} className="relative w-full bg-black text-white selection:bg-cyan-500/30 overflow-x-hidden min-h-screen">
+      <div ref={containerRef} className="relative w-full bg-[#020205] text-white selection:bg-cyan-500/30 overflow-x-hidden min-h-screen">
         {/* Dynamic Video Carousel Background - Always Visible */}
         <VideoCarousel videos={videoConfig} interval={20000} />
 

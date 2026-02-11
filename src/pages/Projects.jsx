@@ -102,7 +102,7 @@ function Projects() {
             <div className="max-w-7xl mx-auto space-y-32">
                 <motion.div className="space-y-4">
                     <span className="text-[12px] uppercase tracking-[0.6em] text-purple-300 font-bold block mb-4">Portfolio</span>
-                    <h1 className="text-8xl md:text-9xl font-bold tracking-tight text-white">
+                    <h1 className="text-6xl md:text-9xl font-bold tracking-tight text-white">
                         Projects
                     </h1>
                 </motion.div>
