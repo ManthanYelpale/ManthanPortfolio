@@ -9,7 +9,7 @@ const navLinks = [
     { id: 'contact', label: 'Contact' },
 ];
 
-function Navbar() {
+function GlobalNavigation() {
     const scrollToSection = (id) => {
         const element = document.getElementById(id);
         if (element) {
@@ -39,4 +39,4 @@ function Navbar() {
     );
 }
 
-export default Navbar;
+export default GlobalNavigation;

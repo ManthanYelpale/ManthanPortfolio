@@ -3,14 +3,14 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { AnimatePresence, motion } from 'framer-motion';
 import Lenis from 'lenis';
 import { ThemeProvider } from './contexts/ThemeContext';
-import VideoCarousel from './components/VideoCarousel';
-import Navbar from './components/Navbar';
+import DynamicBackground from './components/DynamicBackground';
+import GlobalNavigation from './components/GlobalNavigation';
 import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import Resume from './pages/Resume';
-import Preloader from './components/Preloader';
+import OpeningSequence from './components/OpeningSequence';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -121,10 +121,10 @@ function App() {
     <ThemeProvider>
       <div ref={containerRef} className="relative w-full bg-[#020205] text-white selection:bg-cyan-500/30 overflow-x-hidden min-h-screen">
         {/* Dynamic Video Carousel Background - Always Visible */}
-        <VideoCarousel videos={videoConfig} interval={20000} />
+        <DynamicBackground videos={videoConfig} interval={20000} />
 
         <AnimatePresence mode="wait">
-          {loading && <Preloader onComplete={() => setLoading(false)} />}
+          {loading && <OpeningSequence onComplete={() => setLoading(false)} />}
         </AnimatePresence>
 
         {!loading && (
@@ -136,7 +136,7 @@ function App() {
               transition={{ duration: 1.0, delay: 0.5 }}
               className="relative z-10 w-full"
             >
-              <Navbar />
+              <GlobalNavigation />
 
               {/* Content Layer */}
               <main className="w-full">

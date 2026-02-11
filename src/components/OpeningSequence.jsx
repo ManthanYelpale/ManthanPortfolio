@@ -40,4 +40,4 @@ const Preloader = ({ onComplete }) => {
     );
 };
 
-export default Preloader;
+export default OpeningSequence;

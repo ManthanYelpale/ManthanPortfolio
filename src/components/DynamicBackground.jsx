@@ -93,7 +93,7 @@ const VideoCarousel = ({ videos, interval = 20000, className }) => {
                             backfaceVisibility: 'hidden'
                         }}
                         className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${index === currentIndex || (isTransitioning && index === nextIndex)
-                                ? 'opacity-100' : 'opacity-0'
+                            ? 'opacity-100' : 'opacity-0'
                             }`}
                     />
                 );
@@ -102,4 +102,4 @@ const VideoCarousel = ({ videos, interval = 20000, className }) => {
     );
 };
 
-export default VideoCarousel;
+export default DynamicBackground;
