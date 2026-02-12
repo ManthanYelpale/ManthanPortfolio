@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Preloader = ({ onComplete }) => {
+const OpeningSequence = ({ onComplete }) => {
     const [text, setText] = useState('');
     const fullText = "Hello.";
 
