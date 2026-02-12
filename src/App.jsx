@@ -42,9 +42,10 @@ function PageWrapper({ children }) {
 }
 
 // Video configuration with themes
+// Videos hosted on GitHub Releases for optimal performance and zero quality loss
 const videoConfig = [
   {
-    src: '/background_video.mp4',
+    src: 'https://github.com/ManthanYelpale/ManthanPortfolio/releases/download/v1.0-videos/background_video.mp4',
     theme: {
       primary: '#06b6d4',      // cyan-500
       secondary: '#a855f7',    // purple-500  
@@ -54,7 +55,7 @@ const videoConfig = [
     }
   },
   {
-    src: '/305660_small.mp4',
+    src: 'https://github.com/ManthanYelpale/ManthanPortfolio/releases/download/v1.0-videos/305660_small.mp4',
     theme: {
       primary: '#f59e0b',      // amber-500
       secondary: '#ec4899',    // pink-500
@@ -64,7 +65,7 @@ const videoConfig = [
     }
   },
   {
-    src: '/201254-915005916_medium.mp4',
+    src: 'https://github.com/ManthanYelpale/ManthanPortfolio/releases/download/v1.0-videos/201254-915005916_medium.mp4',
     theme: {
       primary: '#10b981',      // emerald-500
       secondary: '#14b8a6',    // teal-500
@@ -74,7 +75,7 @@ const videoConfig = [
     }
   },
   {
-    src: '/234735_medium.mp4',
+    src: 'https://github.com/ManthanYelpale/ManthanPortfolio/releases/download/v1.0-videos/234735_medium.mp4',
     theme: {
       primary: '#8b5cf6',      // violet-500
       secondary: '#6366f1',    // indigo-500
