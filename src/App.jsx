@@ -55,26 +55,6 @@ const videoConfig = [
     }
   },
   {
-    src: 'https://github.com/ManthanYelpale/ManthanPortfolio/releases/download/v1.0-videos/305660_small.mp4',
-    theme: {
-      primary: '#f59e0b',      // amber-500
-      secondary: '#ec4899',    // pink-500
-      accent: '#fbbf24',       // amber-400  
-      textGlow: 'rgba(251, 191, 36, 0.6)',
-      name: 'amber'
-    }
-  },
-  {
-    src: 'https://github.com/ManthanYelpale/ManthanPortfolio/releases/download/v1.0-videos/201254-915005916_medium.mp4',
-    theme: {
-      primary: '#10b981',      // emerald-500
-      secondary: '#14b8a6',    // teal-500
-      accent: '#34d399',       // emerald-400
-      textGlow: 'rgba(52, 211, 153, 0.6)',
-      name: 'emerald'
-    }
-  },
-  {
     src: 'https://github.com/ManthanYelpale/ManthanPortfolio/releases/download/v1.0-videos/234735_medium.mp4',
     theme: {
       primary: '#8b5cf6',      // violet-500
