@@ -20,14 +20,14 @@ function Contact() {
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="relative p-12 bg-white/5 backdrop-blur-md border-2 border-white/40 rounded-2xl shadow-2xl"
+                    className="relative p-6 md:p-12 bg-white/5 backdrop-blur-md border-2 border-white/40 rounded-2xl shadow-2xl"
                 >
-                    <div className="relative z-10 space-y-12">
+                    <div className="relative z-10 space-y-8 md:space-y-12">
                         <div className="space-y-6">
                             <span className="text-[11px] uppercase tracking-[0.5em] font-bold block text-white">
                                 <DynamicText variant="secondary">Contact</DynamicText>
                             </span>
-                            <h2 className="text-5xl md:text-6xl font-black tracking-tight text-white">
+                            <h2 className="text-4xl md:text-6xl font-black tracking-tight text-white">
                                 Get in <DynamicText variant="secondary">Touch</DynamicText>
                             </h2>
                             <p className="text-white text-base max-w-md leading-relaxed">
@@ -72,7 +72,7 @@ function Contact() {
                                 type="submit"
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className="w-full py-5 bg-white/10 border border-white/30 text-white font-bold uppercase tracking-[0.4em] rounded-xl transition-all hover:bg-white/20 hover:border-white/50"
+                                className="w-full py-4 md:py-5 bg-white/10 border border-white/30 text-white font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] text-sm md:text-base rounded-xl transition-all hover:bg-white/20 hover:border-white/50"
                             >
                                 Send Message
                             </motion.button>

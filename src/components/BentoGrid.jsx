@@ -45,7 +45,7 @@ const BentoCard = ({ children, title, icon: Icon, className = "", delay = 0 }) =
                 transform: "translate3d(0,0,0)",
                 willChange: "transform"
             }}
-            className={`p-8 performance-card group hover:border-cyan-400 transition-colors duration-500 ${className}`}
+            className={`p-6 md:p-8 performance-card group hover:border-cyan-400 transition-colors duration-500 ${className}`}
         >
             {/* Optimized Blur Layer - Instant Opacity Hack */}
             <div className="performance-blur-layer" />
@@ -65,8 +65,8 @@ const BentoCard = ({ children, title, icon: Icon, className = "", delay = 0 }) =
 
 
             <div className="relative z-10 space-y-4" style={{ transform: "translateZ(50px)" }}>
-                {Icon && <Icon className="text-cyan-300 mb-4 drop-shadow-[0_0_20px_rgba(34,211,238,0.8)]" size={32} />}
-                <h3 className="text-2xl font-black uppercase tracking-tight text-white mb-3">{title}</h3>
+                {Icon && <Icon className="text-cyan-300 mb-4 drop-shadow-[0_0_20px_rgba(34,211,238,0.8)]" size={24} />}
+                <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight text-white mb-3">{title}</h3>
                 <div className="text-white font-light leading-relaxed drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
                     {children}
                 </div>
@@ -83,7 +83,7 @@ const BentoCard = ({ children, title, icon: Icon, className = "", delay = 0 }) =
 
 const BentoGrid = () => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 container mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 container mx-auto">
             {/* Socials Card */}
             <BentoCard
                 title="Connect"

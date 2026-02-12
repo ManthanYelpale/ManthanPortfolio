@@ -20,10 +20,10 @@ function Home() {
                 <motion.div
                     className="space-y-4"
                 >
-                    <h1 className="text-5xl md:text-7xl lg:text-9xl font-black tracking-tight uppercase text-white font-inter leading-none">
+                    <h1 className="text-6xl md:text-7xl lg:text-9xl font-black tracking-tight uppercase text-white font-inter leading-none">
                         Manthan Yelpale
                     </h1>
-                    <p className="text-xl md:text-2xl lg:text-4xl font-semibold tracking-wide uppercase font-inter text-white/90 mt-2 md:mt-4">
+                    <p className="text-2xl md:text-2xl lg:text-4xl font-semibold tracking-wide uppercase font-inter text-white/90 mt-2 md:mt-4">
                         AI Intern
                     </p>
                 </motion.div>
@@ -33,12 +33,12 @@ function Home() {
             <section className="min-h-[70vh] py-40 px-6 flex items-center justify-center bg-transparent">
                 <div className="max-w-4xl space-y-24">
                     <motion.h2
-                        className="text-2xl md:text-5xl font-black tracking-tight leading-tight uppercase text-center text-white"
+                        className="text-3xl md:text-5xl font-black tracking-tight leading-tight uppercase text-center text-white"
                     >
                         The Intern Phase
                     </motion.h2>
                     <motion.p
-                        className="text-base md:text-2xl font-medium text-white leading-relaxed text-center"
+                        className="text-lg md:text-2xl font-medium text-white leading-relaxed text-center"
                     >
                         Exploring the frontiers of <DynamicText variant="primary" className="font-bold">Generative AI</DynamicText> and <DynamicText variant="secondary" className="font-bold">Computer Vision</DynamicText>.<br className="hidden md:block" />
                         Bridging the gap between <DynamicText variant="accent" className="font-bold">RAG architectures</DynamicText> and real-world impact,

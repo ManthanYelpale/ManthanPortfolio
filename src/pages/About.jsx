@@ -9,10 +9,10 @@ function About() {
                 <motion.div
                     className="flex-1 space-y-8"
                 >
-                    <h1 className="text-6xl md:text-8xl font-black tracking-tight uppercase text-white">
+                    <h1 className="text-5xl md:text-8xl font-black tracking-tight uppercase text-white">
                         <DynamicText variant="primary">About Me</DynamicText>
                     </h1>
-                    <div className="space-y-6 text-xl md:text-2xl font-light leading-relaxed text-white">
+                    <div className="space-y-6 text-lg md:text-2xl font-light leading-relaxed text-white">
                         <p>
                             I am an AI Intern and Engineer passionate about bridging the gap between complex artificial intelligence and intuitive human experiences.
                             My expertise lies in <strong>Generative AI</strong>, <strong>Computer Vision</strong>, and <strong>Full-Stack Development</strong>.

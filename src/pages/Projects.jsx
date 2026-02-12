@@ -42,17 +42,17 @@ function ProjectCard({ project, index }) {
                 transform: "translate3d(0,0,0)",
                 willChange: "transform"
             }}
-            className="group relative h-[450px] performance-card cursor-pointer bg-transparent"
+            className="group relative h-[380px] md:h-[450px] performance-card cursor-pointer bg-transparent"
         >
             <div className="performance-blur-layer" />
             <div className="border-glow" />
 
-            <div className="relative z-10 h-full flex flex-col justify-end p-12 space-y-6" style={{ transform: "translateZ(30px)" }}>
+            <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-12 space-y-4 md:space-y-6" style={{ transform: "translateZ(30px)" }}>
                 <div className="space-y-2">
                     <span className="text-sm uppercase tracking-[0.4em] text-purple-300 font-bold">
                         {project.language || 'Software Development'}
                     </span>
-                    <h3 className="text-4xl font-bold tracking-tight text-white group-hover:text-purple-200 transition-colors">
+                    <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-white group-hover:text-purple-200 transition-colors">
                         {project.name}
                     </h3>
                 </div>
@@ -114,7 +114,7 @@ function Projects() {
                         ))}
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
                         {ghProjects.map((project, i) => (
                             <ProjectCard key={project.id} project={project} index={i} />
                         ))}
