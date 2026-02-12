@@ -16,7 +16,9 @@ const DynamicBackground = ({ videos, interval = 20000, className }) => {
         // Create all video elements upfront
         videos.forEach((video, index) => {
             const videoEl = document.createElement('video');
+
             videoEl.src = video.src;
+
             videoEl.muted = true;
             videoEl.loop = true;
             videoEl.playsInline = true;

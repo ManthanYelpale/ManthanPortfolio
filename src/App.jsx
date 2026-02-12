@@ -57,7 +57,7 @@ function PageWrapper({ children }) {
 // Video configuration with themes
 const videoConfig = [
   {
-    src: 'https://github.com/ManthanYelpale/ManthanPortfolio/releases/download/v1.0-videos/background_video.mp4',
+    src: '/videos/cyan.webm',
     theme: {
       primary: '#06b6d4',
       secondary: '#a855f7',
@@ -67,7 +67,7 @@ const videoConfig = [
     }
   },
   {
-    src: 'https://github.com/ManthanYelpale/ManthanPortfolio/releases/download/v1.0-videos/234735_medium.mp4',
+    src: '/videos/violet.webm',
     theme: {
       primary: '#8b5cf6',
       secondary: '#6366f1',
