@@ -107,6 +107,7 @@ const DynamicBackground = ({ videos, interval = 20000, className }) => {
                         key={index}
                         ref={el => videoRefs.current[index] = el}
                         src={video.src}
+                        poster={video.poster}
                         autoPlay={index === 0}
                         muted
                         loop
