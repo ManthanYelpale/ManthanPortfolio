@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import {
     SiPython, SiHtml5, SiCss3, SiReact, SiNodedotjs,
     SiTailwindcss, SiJavascript, SiTensorflow, SiPytorch,
@@ -54,19 +53,12 @@ function TechStackScroll() {
                 <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black/50 to-transparent z-10 pointer-events-none" />
                 <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black/50 to-transparent z-10 pointer-events-none" />
 
-                {/* Scrolling Track */}
-                <motion.div
+                {/* CSS-only infinite scroll (replaces Framer Motion) */}
+                <div
                     className="flex gap-8 whitespace-nowrap"
-                    animate={{
-                        x: [0, -(120 * techStack.length)]
-                    }}
-                    transition={{
-                        x: {
-                            repeat: Infinity,
-                            repeatType: "loop",
-                            duration: 50,
-                            ease: "linear"
-                        }
+                    style={{
+                        animation: 'tech-scroll 50s linear infinite',
+                        willChange: 'transform'
                     }}
                 >
                     {duplicatedStack.map((tech, index) => {
@@ -81,10 +73,23 @@ function TechStackScroll() {
                             </div>
                         );
                     })}
-                </motion.div>
+                </div>
             </div>
+
+            {/* CSS keyframes for infinite scroll */}
+            <style>{`
+                @keyframes tech-scroll {
+                    from {
+                        transform: translateX(0);
+                    }
+                    to {
+                        transform: translateX(-${120 * techStack.length}px);
+                    }
+                }
+            `}</style>
         </div>
     );
 }
 
-export default TechStackScroll;
+export default React.memo(TechStackScroll);
+

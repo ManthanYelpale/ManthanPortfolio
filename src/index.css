@@ -53,6 +53,7 @@ h4,
     backface-visibility: hidden;
     perspective: 1000px;
     isolation: isolate;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* Instant Blur Layer - No Delay */
@@ -88,6 +89,67 @@ h4,
 
   .neural-text-glow {
     text-shadow: 0 0 10px var(--accent-glow);
+  }
+
+  /* CSS-only animations (replaces Framer Motion) */
+  @keyframes project-card-enter {
+    from {
+      opacity: 0;
+      transform: perspective(1000px) translateY(20px) translateZ(0);
+    }
+    to {
+      opacity: 1;
+      transform: perspective(1000px) translateY(0) translateZ(0);
+    }
+  }
+
+  .project-card-enter {
+    animation: project-card-enter 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes projects-header-enter {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .projects-header {
+    animation: projects-header-enter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Skeleton loading (more efficient than animate-pulse) */
+  @keyframes skeleton-pulse {
+    0%, 100% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  .skeleton-pulse {
+    animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Loading spinner (CSS only) */
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: #06b6d4;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
   }
 
   @keyframes flow {

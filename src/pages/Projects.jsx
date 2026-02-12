@@ -1,48 +1,59 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 function ProjectCard({ project, index }) {
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
+    const cardRef = useRef(null);
+    const [isLoaded, setIsLoaded] = useState(false);
 
-    const mouseXSpring = useSpring(x, { stiffness: 120, damping: 20 });
-    const mouseYSpring = useSpring(y, { stiffness: 120, damping: 20 });
+    // Intersection Observer for lazy rendering
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsLoaded(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1, rootMargin: '50px' }
+        );
 
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
+        if (cardRef.current) {
+            observer.observe(cardRef.current);
+        }
 
+        return () => observer.disconnect();
+    }, []);
+
+    // Vanilla JS 3D tilt effect (replaces Framer Motion)
     const handleMouseMove = (e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
-        x.set(xPct);
-        y.set(yPct);
+        if (!cardRef.current) return;
+
+        const rect = cardRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+        const rotateY = x * 10; // -5 to 5 degrees
+        const rotateX = -y * 10; // -5 to 5 degrees
+
+        cardRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
     };
 
     const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
+        if (!cardRef.current) return;
+        cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
     };
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+        <div
+            ref={cardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
+            className={`group relative h-[380px] md:h-[450px] performance-card cursor-pointer bg-transparent transition-all duration-300 ${isLoaded ? 'project-card-enter' : 'opacity-0'
+                }`}
             style={{
-                rotateX,
-                rotateY,
-                transformStyle: "preserve-3d",
-                transform: "translate3d(0,0,0)",
-                willChange: "transform"
+                transitionDelay: `${index * 100}ms`,
+                willChange: 'transform',
+                transform: 'perspective(1000px) translateZ(0)'
             }}
-            className="group relative h-[380px] md:h-[450px] performance-card cursor-pointer bg-transparent"
         >
             <div className="performance-blur-layer" />
             <div className="border-glow" />
@@ -72,51 +83,71 @@ function ProjectCard({ project, index }) {
                     View Repository →
                 </a>
             </div>
-        </motion.div>
+        </div>
     );
 }
+
+// Memoize to prevent unnecessary re-renders
+const MemoizedProjectCard = React.memo(ProjectCard);
 
 function Projects() {
     const [ghProjects, setGhProjects] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        let mounted = true;
+        const controller = new AbortController();
+
         const fetchRepos = async () => {
             try {
-                const response = await fetch('https://api.github.com/users/ManthanYelpale/repos?sort=updated&per_page=6');
+                const response = await fetch(
+                    'https://api.github.com/users/ManthanYelpale/repos?sort=updated&per_page=6',
+                    { signal: controller.signal }
+                );
                 const data = await response.json();
-                // Filter out the portfolio itself if desired, or keep it
-                setGhProjects(data);
+
+                if (mounted) {
+                    setGhProjects(data);
+                }
             } catch (error) {
-                console.error('Error fetching repos:', error);
+                if (error.name !== 'AbortError') {
+                    console.error('Error fetching repos:', error);
+                }
             } finally {
-                setLoading(false);
+                if (mounted) {
+                    setLoading(false);
+                }
             }
         };
 
         fetchRepos();
+
+        return () => {
+            mounted = false;
+            controller.abort(); // Cancel fetch on unmount
+        };
     }, []);
 
     return (
         <div className="relative w-full min-h-screen pt-32 pb-40 px-6 text-white">
             <div className="max-w-7xl mx-auto space-y-32">
-                <motion.div className="space-y-4">
+                <div className="space-y-4 projects-header">
                     <span className="text-[12px] uppercase tracking-[0.6em] text-purple-300 font-bold block mb-4">Portfolio</span>
                     <h1 className="text-6xl md:text-9xl font-bold tracking-tight text-white">
                         Projects
                     </h1>
-                </motion.div>
+                </div>
 
                 {loading ? (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                         {[1, 2, 3, 4].map((n) => (
-                            <div key={n} className="h-[450px] bg-white/5 rounded-2xl animate-pulse" />
+                            <div key={n} className="h-[450px] bg-white/5 rounded-2xl skeleton-pulse" />
                         ))}
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
                         {ghProjects.map((project, i) => (
-                            <ProjectCard key={project.id} project={project} index={i} />
+                            <MemoizedProjectCard key={project.id} project={project} index={i} />
                         ))}
                     </div>
                 )}
@@ -131,4 +162,5 @@ function Projects() {
     );
 }
 
-export default Projects;
+export default React.memo(Projects);
+

@@ -3,131 +3,144 @@ import { useTheme } from '../contexts/ThemeContext';
 
 const DynamicBackground = ({ videos, interval = 20000, className }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [nextIndex, setNextIndex] = useState(1);
-    const [isTransitioning, setIsTransitioning] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
-    const videoRefs = useRef([]);
+    const [isVisible, setIsVisible] = useState(true);
+    const containerRef = useRef(null);
+    const videoRefs = useRef([]); // Keep refs to all video elements
+    const timersRef = useRef({ transition: null, preload: null });
     const { setCurrentTheme } = useTheme();
 
-    // Check for mobile device
+    // Initialize all video elements ONCE (never removed from DOM)
     useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 768);
-        };
-        handleResize(); // Initial check
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+        if (!containerRef.current || !videos.length) return;
 
-    // Initialize video refs
-    useEffect(() => {
-        videoRefs.current = videoRefs.current.slice(0, videos.length);
-    }, [videos]);
+        // Create all video elements upfront
+        videos.forEach((video, index) => {
+            const videoEl = document.createElement('video');
+            videoEl.src = video.src;
+            videoEl.muted = true;
+            videoEl.loop = true;
+            videoEl.playsInline = true;
+            videoEl.setAttribute('webkit-playsinline', 'true');
+            videoEl.disablePictureInPicture = true;
+            videoEl.preload = index === 0 ? 'auto' : 'metadata'; // Only preload first video
 
-    // Preload next video 2 seconds before transition (RAM optimization)
-    useEffect(() => {
-        const preloadTimer = setTimeout(() => {
-            const next = (currentIndex + 1) % videos.length;
-            setNextIndex(next);
+            videoEl.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${index === 0 ? 'opacity-100' : 'opacity-0'
+                }`;
 
-            // Preload next video
-            if (videoRefs.current[next]) {
-                const videoEl = videoRefs.current[next];
-                videoEl.load(); // Start loading
+            videoEl.style.transform = 'translateZ(0)';
+            videoEl.style.backfaceVisibility = 'hidden';
+            videoEl.style.willChange = 'opacity';
+
+            containerRef.current.appendChild(videoEl);
+            videoRefs.current[index] = videoEl;
+
+            // Play first video
+            if (index === 0) {
+                videoEl.play().catch(() => { });
             }
-        }, interval - 2000); // Preload 2 seconds before transition
+        });
 
-        return () => clearTimeout(preloadTimer);
-    }, [currentIndex, videos, interval]);
+        setCurrentTheme(videos[0].theme);
+
+        return () => {
+            // Cleanup on unmount
+            videoRefs.current.forEach(video => {
+                if (video) {
+                    video.pause();
+                    video.remove();
+                }
+            });
+            videoRefs.current = [];
+        };
+    }, [videos, setCurrentTheme]);
+
+    // Intersection Observer - pause when off-screen
+    useEffect(() => {
+        if (!containerRef.current) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsVisible(entry.isIntersecting);
+
+                const currentVideo = videoRefs.current[currentIndex];
+                if (!entry.isIntersecting && currentVideo) {
+                    currentVideo.pause();
+                } else if (entry.isIntersecting && currentVideo) {
+                    currentVideo.play().catch(() => { });
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        observer.observe(containerRef.current);
+        return () => observer.disconnect();
+    }, [currentIndex]);
+
+    // Page visibility - pause when tab inactive
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            const currentVideo = videoRefs.current[currentIndex];
+            if (document.hidden && currentVideo) {
+                currentVideo.pause();
+            } else if (!document.hidden && currentVideo && isVisible) {
+                currentVideo.play().catch(() => { });
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange, { passive: true });
+        return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+    }, [currentIndex, isVisible]);
 
     // Auto-cycle videos
     useEffect(() => {
-        const timer = setInterval(() => {
-            setIsTransitioning(true);
-            const next = (currentIndex + 1) % videos.length;
+        if (!isVisible || videos.length <= 1) return;
 
-            // Start playing next video
-            if (videoRefs.current[next]) {
-                const videoEl = videoRefs.current[next];
-                videoEl.currentTime = 0;
-                videoEl.muted = true;
-                videoEl.play().catch(e => console.warn("Video play failed:", e));
+        // Preload next video
+        timersRef.current.preload = setTimeout(() => {
+            const nextIdx = (currentIndex + 1) % videos.length;
+            const nextVideo = videoRefs.current[nextIdx];
+            if (nextVideo && nextVideo.preload !== 'auto') {
+                nextVideo.preload = 'auto'; // Start loading
+            }
+        }, interval - 2000);
+
+        // Transition to next video
+        timersRef.current.transition = setTimeout(() => {
+            const nextIdx = (currentIndex + 1) % videos.length;
+            const currentVideo = videoRefs.current[currentIndex];
+            const nextVideo = videoRefs.current[nextIdx];
+
+            // Fade out current, fade in next
+            if (currentVideo) {
+                currentVideo.classList.remove('opacity-100');
+                currentVideo.classList.add('opacity-0');
+            }
+
+            if (nextVideo) {
+                nextVideo.currentTime = 0;
+                nextVideo.classList.remove('opacity-0');
+                nextVideo.classList.add('opacity-100');
+                nextVideo.play().catch(() => { });
             }
 
             // Update theme
-            setCurrentTheme(videos[next].theme);
-
-            // Complete transition after fade duration
-            setTimeout(() => {
-                setCurrentIndex(next);
-                setIsTransitioning(false);
-
-                // Pause AND unload previous video to free RAM
-                const prev = (next - 1 + videos.length) % videos.length;
-                if (videoRefs.current[prev] && !isMobile) {
-                    const prevVideo = videoRefs.current[prev];
-                    prevVideo.pause();
-                    prevVideo.src = ''; // Unload from memory
-                    prevVideo.load(); // Reset
-                }
-            }, 1500);
+            setCurrentTheme(videos[nextIdx].theme);
+            setCurrentIndex(nextIdx);
 
         }, interval);
 
-        return () => clearInterval(timer);
-    }, [currentIndex, videos, interval, setCurrentTheme, isMobile]);
-
-    // Set initial theme and play first video
-    useEffect(() => {
-        if (videos.length > 0) {
-            setCurrentTheme(videos[0].theme);
-            // Force play first video
-            if (videoRefs.current[0]) {
-                const videoEl = videoRefs.current[0];
-                videoEl.muted = true;
-                videoEl.play().catch(e => console.warn("Initial video play failed:", e));
-            }
-        }
-    }, []);
+        return () => {
+            clearTimeout(timersRef.current.preload);
+            clearTimeout(timersRef.current.transition);
+        };
+    }, [currentIndex, videos, interval, isVisible, setCurrentTheme]);
 
     return (
-        <div className={className || "fixed inset-0 w-full h-full z-0 bg-[#020205]"}>
-            {videos.map((video, index) => {
-                // AGGRESSIVE RAM OPTIMIZATION:
-                // Desktop: Only render current and next video (not all 4)
-                // Mobile: Only render current video (1 video max)
-                const shouldRender = isMobile
-                    ? index === currentIndex
-                    : (index === currentIndex || (isTransitioning && index === nextIndex));
-
-                if (!shouldRender) return null;
-
-                return (
-                    <video
-                        key={index}
-                        ref={el => videoRefs.current[index] = el}
-                        src={video.src}
-                        autoPlay={index === 0}
-                        muted
-                        loop
-                        playsInline
-                        webkit-playsinline="true"
-                        preload={index === 0 ? "auto" : "none"}
-                        disablePictureInPicture
-                        style={{
-                            imageRendering: 'high-quality',
-                            filter: 'contrast(1.05) saturate(1.1)',
-                            transform: 'translateZ(0)',
-                            backfaceVisibility: 'hidden'
-                        }}
-                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${index === currentIndex || (isTransitioning && index === nextIndex)
-                            ? 'opacity-100' : 'opacity-0'
-                            }`}
-                    />
-                );
-            })}
-        </div>
+        <div
+            ref={containerRef}
+            className={className || "fixed inset-0 w-full h-full z-0 bg-[#020205]"}
+        />
     );
 };
 
-export default DynamicBackground;
+export default React.memo(DynamicBackground);
