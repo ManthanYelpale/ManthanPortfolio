@@ -24,18 +24,33 @@ const DynamicBackground = ({ videos, interval = 20000, className }) => {
         videoRefs.current = videoRefs.current.slice(0, videos.length);
     }, [videos]);
 
+    // Preload next video 2 seconds before transition (RAM optimization)
+    useEffect(() => {
+        const preloadTimer = setTimeout(() => {
+            const next = (currentIndex + 1) % videos.length;
+            setNextIndex(next);
+
+            // Preload next video
+            if (videoRefs.current[next]) {
+                const videoEl = videoRefs.current[next];
+                videoEl.load(); // Start loading
+            }
+        }, interval - 2000); // Preload 2 seconds before transition
+
+        return () => clearTimeout(preloadTimer);
+    }, [currentIndex, videos, interval]);
+
     // Auto-cycle videos
     useEffect(() => {
         const timer = setInterval(() => {
             setIsTransitioning(true);
             const next = (currentIndex + 1) % videos.length;
-            setNextIndex(next);
 
             // Start playing next video
             if (videoRefs.current[next]) {
                 const videoEl = videoRefs.current[next];
                 videoEl.currentTime = 0;
-                videoEl.muted = true; // Force mute to ensure autoplay works
+                videoEl.muted = true;
                 videoEl.play().catch(e => console.warn("Video play failed:", e));
             }
 
@@ -47,17 +62,20 @@ const DynamicBackground = ({ videos, interval = 20000, className }) => {
                 setCurrentIndex(next);
                 setIsTransitioning(false);
 
-                // Pause previous video to save resources
+                // Pause AND unload previous video to free RAM
                 const prev = (next - 1 + videos.length) % videos.length;
-                if (videoRefs.current[prev]) {
-                    videoRefs.current[prev].pause();
+                if (videoRefs.current[prev] && !isMobile) {
+                    const prevVideo = videoRefs.current[prev];
+                    prevVideo.pause();
+                    prevVideo.src = ''; // Unload from memory
+                    prevVideo.load(); // Reset
                 }
-            }, 1500); // Match transition duration
+            }, 1500);
 
         }, interval);
 
         return () => clearInterval(timer);
-    }, [currentIndex, videos, interval, setCurrentTheme]);
+    }, [currentIndex, videos, interval, setCurrentTheme, isMobile]);
 
     // Set initial theme and play first video
     useEffect(() => {
@@ -75,10 +93,12 @@ const DynamicBackground = ({ videos, interval = 20000, className }) => {
     return (
         <div className={className || "fixed inset-0 w-full h-full z-0 bg-[#020205]"}>
             {videos.map((video, index) => {
-                // LOGIC:
-                // Desktop: Render ALL videos to ensure instant, smooth cross-fades.
-                // Mobile: Only render current & next videos to prevent crashing/lag.
-                const shouldRender = !isMobile || (index === currentIndex || (isTransitioning && index === nextIndex));
+                // AGGRESSIVE RAM OPTIMIZATION:
+                // Desktop: Only render current and next video (not all 4)
+                // Mobile: Only render current video (1 video max)
+                const shouldRender = isMobile
+                    ? index === currentIndex
+                    : (index === currentIndex || (isTransitioning && index === nextIndex));
 
                 if (!shouldRender) return null;
 
@@ -87,12 +107,12 @@ const DynamicBackground = ({ videos, interval = 20000, className }) => {
                         key={index}
                         ref={el => videoRefs.current[index] = el}
                         src={video.src}
-                        autoPlay
+                        autoPlay={index === 0}
                         muted
                         loop
                         playsInline
                         webkit-playsinline="true"
-                        preload="auto"
+                        preload={index === 0 ? "auto" : "none"}
                         disablePictureInPicture
                         style={{
                             imageRendering: 'high-quality',
