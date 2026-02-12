@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
-const VideoCarousel = ({ videos, interval = 20000, className }) => {
+const DynamicBackground = ({ videos, interval = 20000, className }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [nextIndex, setNextIndex] = useState(1);
     const [isTransitioning, setIsTransitioning] = useState(false);
@@ -33,8 +33,10 @@ const VideoCarousel = ({ videos, interval = 20000, className }) => {
 
             // Start playing next video
             if (videoRefs.current[next]) {
-                videoRefs.current[next].currentTime = 0;
-                videoRefs.current[next].play().catch(e => console.error(e));
+                const videoEl = videoRefs.current[next];
+                videoEl.currentTime = 0;
+                videoEl.muted = true; // Force mute to ensure autoplay works
+                videoEl.play().catch(e => console.warn("Video play failed:", e));
             }
 
             // Update theme
@@ -57,10 +59,16 @@ const VideoCarousel = ({ videos, interval = 20000, className }) => {
         return () => clearInterval(timer);
     }, [currentIndex, videos, interval, setCurrentTheme]);
 
-    // Set initial theme
+    // Set initial theme and play first video
     useEffect(() => {
         if (videos.length > 0) {
             setCurrentTheme(videos[0].theme);
+            // Force play first video
+            if (videoRefs.current[0]) {
+                const videoEl = videoRefs.current[0];
+                videoEl.muted = true;
+                videoEl.play().catch(e => console.warn("Initial video play failed:", e));
+            }
         }
     }, []);
 
