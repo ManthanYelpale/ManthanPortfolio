@@ -46,7 +46,6 @@ function PageWrapper({ children }) {
 const videoConfig = [
   {
     src: 'https://github.com/ManthanYelpale/ManthanPortfolio/releases/download/v1.0-videos/background_video.mp4',
-    poster: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3ClinearGradient id="g" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%2306b6d4"%3E%3C/stop%3E%3Cstop offset="100%25" style="stop-color:%23a855f7"%3E%3C/stop%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="100%25" height="100%25" fill="url(%23g)"%3E%3C/rect%3E%3C/svg%3E',
     theme: {
       primary: '#06b6d4',      // cyan-500
       secondary: '#a855f7',    // purple-500  
@@ -57,7 +56,6 @@ const videoConfig = [
   },
   {
     src: 'https://github.com/ManthanYelpale/ManthanPortfolio/releases/download/v1.0-videos/305660_small.mp4',
-    poster: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3ClinearGradient id="g" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%23f59e0b"%3E%3C/stop%3E%3Cstop offset="100%25" style="stop-color:%23ec4899"%3E%3C/stop%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="100%25" height="100%25" fill="url(%23g)"%3E%3C/rect%3E%3C/svg%3E',
     theme: {
       primary: '#f59e0b',      // amber-500
       secondary: '#ec4899',    // pink-500
@@ -68,7 +66,6 @@ const videoConfig = [
   },
   {
     src: 'https://github.com/ManthanYelpale/ManthanPortfolio/releases/download/v1.0-videos/201254-915005916_medium.mp4',
-    poster: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3ClinearGradient id="g" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%2310b981"%3E%3C/stop%3E%3Cstop offset="100%25" style="stop-color:%2314b8a6"%3E%3C/stop%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="100%25" height="100%25" fill="url(%23g)"%3E%3C/rect%3E%3C/svg%3E',
     theme: {
       primary: '#10b981',      // emerald-500
       secondary: '#14b8a6',    // teal-500
@@ -79,7 +76,6 @@ const videoConfig = [
   },
   {
     src: 'https://github.com/ManthanYelpale/ManthanPortfolio/releases/download/v1.0-videos/234735_medium.mp4',
-    poster: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3ClinearGradient id="g" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%238b5cf6"%3E%3C/stop%3E%3Cstop offset="100%25" style="stop-color:%236366f1"%3E%3C/stop%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="100%25" height="100%25" fill="url(%23g)"%3E%3C/rect%3E%3C/svg%3E',
     theme: {
       primary: '#8b5cf6',      // violet-500
       secondary: '#6366f1',    // indigo-500
