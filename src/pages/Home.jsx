@@ -20,18 +20,18 @@ function Home() {
                 <motion.div
                     className="space-y-4"
                 >
-                    <h1 className="text-6xl md:text-7xl lg:text-9xl font-black tracking-tight uppercase text-white leading-none">
+                    <h1 className="text-4xl md:text-7xl lg:text-9xl font-black tracking-tight uppercase text-white leading-none">
                         Manthan Yelpale
                     </h1>
-                    <p className="text-2xl md:text-2xl lg:text-4xl font-semibold tracking-wide uppercase text-white mt-2 md:mt-4">
+                    <p className="text-lg md:text-2xl lg:text-4xl font-semibold tracking-wide uppercase text-white mt-2 md:mt-4">
                         AI Engineer
                     </p>
                 </motion.div>
             </section>
 
             {/* Narrative Section */}
-            <section className="min-h-[70vh] py-40 px-6 flex items-center justify-center bg-transparent">
-                <div className="max-w-4xl space-y-24 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-8 md:p-12 shadow-2xl">
+            <section className="min-h-[70vh] py-20 md:py-40 px-6 flex items-center justify-center bg-transparent">
+                <div className="max-w-4xl space-y-12 md:space-y-24 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-12 shadow-2xl">
                     <motion.h2
                         className="text-3xl md:text-5xl font-black tracking-tight leading-tight uppercase text-center text-white"
                     >

@@ -24,12 +24,12 @@ function GlobalNavigation() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-fit"
         >
-            <div className="relative bg-white/10 backdrop-blur-xl px-5 md:px-8 py-3 md:py-4 rounded-full flex items-center gap-6 md:gap-8 shadow-2xl border-2 border-white/40 max-w-[95vw]">
+            <div className="relative bg-white/10 backdrop-blur-xl px-4 py-3 md:px-8 md:py-4 rounded-full flex items-center gap-3 md:gap-8 shadow-2xl border-2 border-white/40 max-w-[90vw] overflow-x-auto scrollbar-hide">
                 {navLinks.map((link) => (
                     <button
                         key={link.id}
                         onClick={() => scrollToSection(link.id)}
-                        className="relative z-10 text-[13px] md:text-[11px] uppercase tracking-[0.2em] md:tracking-[0.5em] font-bold transition-all duration-500 text-white hover:text-white/70 cursor-pointer"
+                        className="relative z-10 text-[10px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.5em] font-bold transition-all duration-500 text-white hover:text-white/70 cursor-pointer whitespace-nowrap"
                     >
                         {link.label}
                     </button>

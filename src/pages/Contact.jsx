@@ -23,11 +23,11 @@ function Contact() {
                     className="relative p-6 md:p-12 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl"
                 >
                     <div className="relative z-10 space-y-8 md:space-y-12">
-                        <div className="space-y-6">
-                            <span className="text-[11px] uppercase tracking-[0.5em] font-bold block text-white">
+                        <div className="space-y-4 md:space-y-6">
+                            <span className="text-[10px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.5em] font-bold block text-white">
                                 <DynamicText variant="secondary">Contact</DynamicText>
                             </span>
-                            <h2 className="text-4xl md:text-6xl font-black tracking-tight text-white">
+                            <h2 className="text-3xl md:text-6xl font-black tracking-tight text-white">
                                 Get in <DynamicText variant="secondary">Touch</DynamicText>
                             </h2>
                             <p className="text-white text-base max-w-md leading-relaxed">
