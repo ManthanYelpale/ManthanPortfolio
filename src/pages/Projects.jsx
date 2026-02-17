@@ -131,7 +131,7 @@ function Projects() {
     return (
         <div className="relative w-full min-h-screen pt-32 pb-40 px-6 text-white">
             <div className="max-w-7xl mx-auto space-y-32">
-                <div className="space-y-4 projects-header">
+                <div className="space-y-4 projects-header bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-8 md:p-12 shadow-2xl">
                     <span className="text-[12px] uppercase tracking-[0.6em] text-purple-300 font-bold block mb-4">Portfolio</span>
                     <h1 className="text-6xl md:text-9xl font-bold tracking-tight text-white">
                         Projects

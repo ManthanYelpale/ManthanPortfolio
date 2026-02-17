@@ -41,10 +41,12 @@ function TechStackScroll() {
 
     return (
         <div className="relative w-full py-12 overflow-hidden bg-transparent">
-            <div className="max-w-7xl mx-auto mb-8 px-6">
-                <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white text-center">
-                    Tech Stack
-                </h2>
+            <div className="max-w-7xl mx-auto mb-8 px-6 flex justify-center">
+                <div className="bg-black/40 backdrop-blur-md rounded-full px-8 py-3 border border-white/10 shadow-lg">
+                    <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white text-center">
+                        Tech Stack
+                    </h2>
+                </div>
             </div>
 
             {/* Scrolling Container */}

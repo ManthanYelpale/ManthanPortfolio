@@ -161,7 +161,7 @@ function App() {
                     <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                       <div className="text-center md:text-left">
                         <h3 className="text-2xl font-black uppercase tracking-tight text-white">Manthan Yelpale</h3>
-                        <p className="text-sm text-white/80 mt-1">AI Intern</p>
+                        <p className="text-sm text-white mt-1">AI Engineer</p>
                       </div>
 
                       <div className="flex gap-8">
