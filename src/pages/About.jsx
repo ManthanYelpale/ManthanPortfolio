@@ -7,7 +7,7 @@ function About() {
         <div className="relative w-full min-h-screen pt-32 pb-20 px-6 text-white overflow-hidden">
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-20 items-center">
                 <motion.div
-                    className="flex-1 space-y-8 bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-8 md:p-12 shadow-2xl"
+                    className="flex-1 space-y-8 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-8 md:p-12 shadow-2xl"
                 >
                     <h1 className="text-5xl md:text-8xl font-black tracking-tight uppercase text-white">
                         <DynamicText variant="primary">About Me</DynamicText>

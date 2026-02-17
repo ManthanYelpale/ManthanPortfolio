@@ -6,7 +6,7 @@ function Resume() {
     return (
         <div className="relative w-full min-h-screen pt-32 pb-20 px-6 text-white">
             <div className="max-w-5xl mx-auto space-y-20">
-                <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-8 md:p-12 shadow-2xl flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+                <div className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-8 md:p-12 shadow-2xl flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
                     <motion.div
                         className="space-y-4"
                     >
@@ -32,7 +32,7 @@ function Resume() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="space-y-8 bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-8 shadow-2xl"
+                        className="space-y-8 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-8 shadow-2xl"
                     >
                         <div className="flex items-center gap-4 text-cyan-400">
                             <Briefcase size={32} />
@@ -57,7 +57,7 @@ function Resume() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="space-y-8 bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-8 shadow-2xl"
+                        className="space-y-8 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-8 shadow-2xl"
                     >
                         <div className="flex items-center gap-4 text-cyan-400">
                             <GraduationCap size={32} />
@@ -77,7 +77,7 @@ function Resume() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="col-span-1 md:col-span-2 space-y-8 bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-8 shadow-2xl"
+                        className="col-span-1 md:col-span-2 space-y-8 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-8 shadow-2xl"
                     >
                         <div className="flex items-center gap-4 text-purple-400">
                             <Briefcase size={32} />

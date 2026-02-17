@@ -20,7 +20,7 @@ function Contact() {
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="relative p-6 md:p-12 bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl"
+                    className="relative p-6 md:p-12 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl"
                 >
                     <div className="relative z-10 space-y-8 md:space-y-12">
                         <div className="space-y-6">

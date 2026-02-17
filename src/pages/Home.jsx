@@ -31,7 +31,7 @@ function Home() {
 
             {/* Narrative Section */}
             <section className="min-h-[70vh] py-40 px-6 flex items-center justify-center bg-transparent">
-                <div className="max-w-4xl space-y-24 bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-8 md:p-12 shadow-2xl">
+                <div className="max-w-4xl space-y-24 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-8 md:p-12 shadow-2xl">
                     <motion.h2
                         className="text-3xl md:text-5xl font-black tracking-tight leading-tight uppercase text-center text-white"
                     >
